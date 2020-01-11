@@ -11,33 +11,61 @@ import lombok.NoArgsConstructor;
 @Data
 public class Task {
 
+	/** ID 생성시 milliseconds */
 	long id;
-	String author;
+	/** task 주제 */
+	String category;
+	/** task 요약 */
 	String title;
+	/** task 상세내용 */
 	String content;
+	/** task 생성자 */
+	String creator;
+	/** task 책임자 */
+	String owner;
+	/** task 처리자 */
+	String worker;
+	/** task 공동 처리자 */
+	String[] coworker;
+	/** 위임자 */
+	String delegator;
+	/** 상태 */
+	Status status;
+	/** task 생성일 */
+	Date created;
+	/** 내용 수정일 */
+	Date modified;
+	/** task 시작일 */
+	Date startd;
+	/** task 마감일 */
+	Date deadline;
+	/** task 종료일 */
+	Date completed;
+
+	boolean windowMinimized;
 	Position position;
 	Size size;
-	boolean windowMinimized;
-	Status status;
-	Date created;
-	Date modified;
-	Date closed;
-	String color;
+	Color color;
 
-	@Data
-	public static class Position {
-		int left;
-		int top;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Task other = (Task) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 
-	@Data
-	public static class Size {
-		String width;
-		String height;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
 	}
-
-	public static enum Status {
-		N, D;
-	}
-
 }

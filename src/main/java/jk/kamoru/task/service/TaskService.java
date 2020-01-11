@@ -1,6 +1,7 @@
 package jk.kamoru.task.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import jk.kamoru.task.domain.Task;
 
@@ -15,5 +16,7 @@ public interface TaskService {
 	void persist(Task task);
 
 	void delete(Task task);
+
+	List<String> categories(boolean admin);
 
 }

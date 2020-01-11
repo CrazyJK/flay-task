@@ -50,18 +50,16 @@ public class TaskFileSource implements TaskSource {
 
 	@Override
 	public void save(Task task) {
-		try {
-			Task found = get(task);
-			list.remove(found);
-		} catch(TaskNotfoundException ignore) {}
+		if (list.contains(task)) {
+			list.remove(task);
+		}
 		list.add(task);
 		save();
 	}
 
 	@Override
 	public void delete(Task task) {
-		Task found = get(task);
-		list.remove(found);
+		list.remove(task);
 		save();
 	}
 

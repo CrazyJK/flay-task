@@ -162,3 +162,8 @@ textarea.task-pad:focus {
 		display: none;
 	}
 }
+
+input[type="date"] {
+	width: 190px;
+	border: 0;
+}

@@ -1,6 +1,8 @@
 package jk.kamoru.task.rest;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,14 +17,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import jk.kamoru.task.domain.Color;
+import jk.kamoru.task.domain.Status;
 import jk.kamoru.task.domain.Task;
 import jk.kamoru.task.service.TaskService;
+import jk.kamoru.task.service.TaskUtils;
 
 @RestController
 @RequestMapping("/info/task")
 public class TaskController {
 
 	@Autowired TaskService taskService;
+
+	@GetMapping("/color")
+	public Color[] color() {
+		return Color.values();
+	}
+
+	@GetMapping("/status")
+	public Status[] status() {
+		return Status.values();
+	}
+
+	@GetMapping("/statusMap")
+	public Map<Status, String> statusMap() {
+		return Status.valuesMap();
+	}
+
+	@GetMapping("/categories")
+	public List<String> categories(@RequestHeader(name = "admin", required = false, defaultValue = "false") boolean admin) {
+		return taskService.categories(admin);
+	}
+
+	@GetMapping("/new")
+	public Task newTask() {
+		return TaskUtils.getInstance();
+	}
 
 	@GetMapping("/{id}")
 	public Task get(@PathVariable long id) {

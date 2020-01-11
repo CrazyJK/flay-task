@@ -29,10 +29,10 @@ form#signin {
 form#signin .input-group {
 	border: 0;
 	border-radius: .5rem;
-	box-shadow: inset 0 0 2rem 2rem rgba(70, 105, 101, .9), 4px 4px 8px 4px rgba(0, 0, 0, .5);
+	/* box-shadow: inset 0 0 2rem 2rem rgba(70, 105, 101, .9), 4px 4px 8px 4px rgba(0, 0, 0, .5); */
 }
 form#signin input, form#signin button {
-	font-size: 2rem;
+	font-size: 1.5rem;
 }
 .login-error {
 	border-radius: 1rem;
@@ -61,8 +61,8 @@ $(document).ready(function() {
 			<form name="f" method="POST" id="signin" autocomplete="off">
 				<input type="checkbox" class="sr-only" name="remember-me" checked="checked">
 				<div class="input-group input-group-lg">
-					<input type="text"     name="username" class="form-control bg-transparent text-danger font-weight-bold border-0" placeholder="Name" required autofocus>
-					<input type="password" name="password" class="form-control bg-transparent text-danger font-weight-bold border-0" placeholder="Password" required>
+					<input type="text"     name="username" class="form-control bg-transparent text-light font-weight-bold border-0" placeholder="Name" required autofocus>
+					<input type="password" name="password" class="form-control bg-transparent text-light font-weight-bold border-0" placeholder="Password" required>
 					<div class="input-group-append">
 						<button type="submit" class="btn bg-transparent text-danger font-weight-bold border-0 pt-0">signin</button>
 					</div>
