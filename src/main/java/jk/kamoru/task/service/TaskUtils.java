@@ -29,7 +29,7 @@ public class TaskUtils {
 		task.setStartd(new Date());
 		task.setModified(new Date());
 		task.setStatus(Status.I);
-		task.setColor(Color.getRandom());
+		task.setColor(Color.WHITE);
 		task.setWindowMinimized(false);
 		return task;
 	}
@@ -87,9 +87,16 @@ public class TaskUtils {
 	 */
 	public static boolean isClosedNow(Task task, Task pastTask) {
 		if (Status.equalsAny(task.getStatus(), Status.T, Status.C)) {
-			if (Status.equalsAny(pastTask.getStatus(), Status.I, Status.R, Status.O)) {
+			if (Status.equalsAny(pastTask.getStatus(), Status.I, Status.R, Status.O, Status.P)) {
 				return true;
 			}
+		}
+		return false;
+	}
+
+	public static boolean isOpen(Task task, Task pastTask) {
+		if (Status.equalsAny(task.getStatus(), Status.I, Status.R, Status.O, Status.P)) {
+			return true;
 		}
 		return false;
 	}

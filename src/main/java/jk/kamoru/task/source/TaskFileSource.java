@@ -45,7 +45,7 @@ public class TaskFileSource implements TaskSource {
 
 	@Override
 	public Collection<Task> list() {
-		return list.stream().sorted(Comparator.comparing(Task::getId).reversed()).collect(Collectors.toList());
+		return list.stream().sorted(Comparator.comparing(Task::getStartd).reversed()).collect(Collectors.toList());
 	}
 
 	@Override

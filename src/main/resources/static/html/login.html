@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Signin</title>
+<title>Task signin</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/webjars/fontawesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/webjars/jquery-ui/jquery-ui.min.css"/>
+<link rel="stylesheet" href="/webjars/jquery-ui/jquery-ui.theme.min.css"/>
 <style type="text/css">
 .display-middle {
     position: absolute;
@@ -17,25 +19,13 @@
 #title {
 	cursor: default;
 }
-#signinWrap {
-	min-height: 70px;
-}
-#btnEnter {
-	cursor: pointer;
-}
 form#signin {
-	width: 450px;
-}
-form#signin .input-group {
-	border: 0;
-	border-radius: .5rem;
-	/* box-shadow: inset 0 0 2rem 2rem rgba(70, 105, 101, .9), 4px 4px 8px 4px rgba(0, 0, 0, .5); */
-}
-form#signin input, form#signin button {
-	font-size: 1.5rem;
+	width: 345px;
 }
 .login-error {
-	border-radius: 1rem;
+    border-radius: 1rem;
+    box-shadow: inset 0 0 10rem #f00;
+	transition: all 2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 input.form-control:focus {
 	outline: none;
@@ -45,28 +35,32 @@ input.form-control:focus {
 <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="/webjars/popper.js/umd/popper.js"></script>
 <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/webjars/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	if (window.location.search.indexOf('error') > 0) {
 		$(".display-middle").addClass("login-error");
 	}
+	$("input").on("keyup", function() {
+		if ($("#name").val().trim().length > 0 && $("#pass").val().trim().length > 0) {
+			$(".btn").animate({opacity: 1}, 500);
+		} else {
+			$(".btn").animate({opacity: 0}, 500);
+		}
+	});
 });
 </script>
 </head>
 <body class="bg-dark">
 
 	<div class="display-middle">
-		<h1 class="display-2 text-uppercase text-light font-weight-bold" id="title">task</h1>
-		<div class="text-center" id="signinWrap">
-			<form name="f" method="POST" id="signin" autocomplete="off">
+		<h1 class="display-1 text-uppercase text-light font-weight-bold text-center" id="title">task</h1>
+		<div class="container">
+			<form method="POST" id="signin" autocomplete="off" class="form-inline">
 				<input type="checkbox" class="sr-only" name="remember-me" checked="checked">
-				<div class="input-group input-group-lg">
-					<input type="text"     name="username" class="form-control bg-transparent text-light font-weight-bold border-0" placeholder="Name" required autofocus>
-					<input type="password" name="password" class="form-control bg-transparent text-light font-weight-bold border-0" placeholder="Password" required>
-					<div class="input-group-append">
-						<button type="submit" class="btn bg-transparent text-danger font-weight-bold border-0 pt-0">signin</button>
-					</div>
-				</div>
+				<input type="text"     name="username" class="form-control form-control-lg bg-transparent text-light font-weight-bold border-0 text-center w-100" placeholder="Name" id="name" required autofocus>
+				<input type="password" name="password" class="form-control form-control-lg bg-transparent text-light font-weight-bold border-0 text-center w-100" placeholder="Password" id="pass" required>
+				<button type="submit" class="btn btn-lg btn-block bg-transparent text-light font-weight-bold border-0" style="opacity: 0;">signin</button>
 			</form>
 		</div>
 	</div>

@@ -5,35 +5,34 @@
 var taskColors = ['yellow', 'red'], isListAll = false;
 var statusMap, colorList;
 
-$(document).ready(function() {
+restCall("/info/task/statusMap", {async: false}, function(map) {
+	statusMap = map;
+});
 
-	restCall("/info/task/statusMap", {async: false}, function(map) {
-		statusMap = map;
-	});
-
-	restCall("/info/task/color", {async: false}, function(list) {
-		colorList = list;
-	});
-
-
-	addEventListener();
+restCall("/info/task/color", {async: false}, function(list) {
+	colorList = list;
 });
 
 function Task(data) {
+	const WIDTH = 36, HEIGHT = 26;
 	var self = this;
 	
-	self.data = {};
-	
-	const WIDTH = 26, HEIGHT = 16;
-	
+	var taskData = {};
+	self.wrapName = "taskWrapper";
+
+	// make data
 	if (data) {
-		self.data = data;
+		taskData = data;
+		taskData.position = {
+				left: Math.max(0, Math.min(data.position.left, $(window).width() - WIDTH * 16)),
+				top: Math.max(0, Math.min(data.position.top,  $(window).height() - HEIGHT * 16))
+		}
+		console.log("load Task", taskData);
 	} else {
 		restCall('/info/task/new', {async: false}, function(newTask) {
-			console.log("newTask", newTask);
-			
-			var DEFAULTS = {
-					title: $.datepicker.formatDate("yy/mm/dd", new Date()),
+			const DEFAULTS = {
+					category: '',
+					title: '',
 					content: '',
 					position: {
 						left: Math.floor(Math.random() * ($(window).width() - WIDTH * 16)),
@@ -44,101 +43,145 @@ function Task(data) {
 						height: HEIGHT + 'rem'
 					}
 			};
-			self.data = $.extend({}, newTask, DEFAULTS);
-			console.log("this.data", self.data);
+			taskData = $.extend({}, newTask, DEFAULTS);
+			console.log("new Task", taskData);
 		});
 	}
-
-	self.$task = 
-			$('<div class="task">'
+	
+	// make ui
+	self.$task = $(
+			  '<div class="task">'
 			+ '  <div class="task-control">'
 			+ '    <a href="#" class="task-minimize-btn"><i class="fa fa-window-minimize"></i></a>'
-			+ '    <a href="#" class="task-restore-btn"><i class="fa fa-window-restore"></i></a>'
-			+ '    <a href="#" class="task-delete-btn"><i class="fa fa-window-close"></i></a>'
+			+ '    <a href="#" class="task-restore-btn hide"><i class="fa fa-window-restore"></i></a>'
+			+ '    <a href="#" class="task-hide-btn"><i class="fa fa-window-close"></i></a>'
 			+ '  </div>'
 			+ '  <div class="task-header">'
 			+ '    <h5>Task</h5>'
 			+ '  </div>'
-			+ '  <div class="task-category p-1">'
-			+ '    <input class="border-0 w-100" placeholder="Task category" value="' + this.data.category + '">'
+			+ '  <div class="task-category">'
+			+ '    <input class="input-category" placeholder="Task category" id="taskCategory">'
 			+ '  </div>'
-			+ '  <div class="task-title p-1">'
-			+ '    <input class="border-0 w-100" placeholder="Task title" value="' + this.data.title + '">'
+			+ '  <div class="task-title">'
+			+ '    <input class="input-title" placeholder="Task title">'
+			+ '  </div>'
+			+ '  <div class="task-schedule d-flex justify-content-between small">'
+			+ '    <input type="date" class="input-created" placeholder="Create date">'
+			+ '    <input type="date" class="input-startd" placeholder="Start date">'
+			+ '    <input type="date" class="input-deadline" placeholder="Deadline">'
 			+ '  </div>'
 			+ '  <div class="task-body">'
-			+ '    <textarea class="task-pad" placeholder="Task content">' + this.data.content + '</textarea>'
+			+ '    <textarea class="input-content" placeholder="Task content"></textarea>'
 			+ '  </div>'
-			+ '  <div class="task-schedule p-1 d-flex justify-content-between">'
-			+ '    <input type="date" class="" placeholder="Start date" value="' + $.datepicker.formatDate("yy-mm-dd", new Date(this.data.startd)) + '">'
-			+ '    <input type="date" class="" placeholder="Deadline" value="' + $.datepicker.formatDate("yy-mm-dd", new Date(this.data.deadline)) + '">'
+			+ '  <div class="task-tail small">'
+			+ '    <label><input type="radio" name="status" value="R">Resume</label>'
+			+ '    <label><input type="radio" name="status" value="P">Pause</label>'
+			+ '    <label><input type="radio" name="status" value="T">Terminate</label>'
+			+ '    <label><input type="radio" name="status" value="C">Complete</label>'
+			+ '    <label class="task-time"></label>'
 			+ '  </div>'
-			+ '  <div class="task-tail">'
-			+ '    <label class="task-time">' + $.datepicker.formatDate("yy/mm/dd", new Date(this.data.modified)) + '</label>'
-			+ '  </div>'
-			+ '</div>').css({
-				left: Math.min(self.data.position.left, $(window).width() - WIDTH * 16),
-				top: Math.min(self.data.position.top, $(window).height() - HEIGHT * 16),
-				width: self.data.size.width,
-				height: self.data.size.height
-			}).addClass(self.data.color);
+			+ '</div>').attr("id", "task_" + taskData.id).addClass(taskData.color).css({
+				left: taskData.position.left,
+				top:  taskData.position.top,
+				width: taskData.size.width,
+				height: taskData.size.height
+			});
 
-	this.$task.find(".task-minimize-btn").on("click", function() {
+	// set data
+	self.$task.find(".input-category").val(taskData.category);
+	self.$task.find(".input-title").val(taskData.title);
+	self.$task.find(".input-content").val(taskData.content);
+	self.$task.find(".input-created").val(formatDate(taskData.created));
+	self.$task.find(".input-startd").val(formatDate(taskData.startd));
+	self.$task.find(".input-deadline").val(formatDate(taskData.deadline));
+	self.$task.find(".task-time").html(formatDate(taskData.modified));
+	self.$task.find("input:radio[name='status'][value='" + ("IRO".indexOf(taskData.status) > -1 ? "R" : taskData.status) + "']").prop("checked", true);
+	
+	// task event
+	self.$task.find(".task-minimize-btn").on("click", function() {
 		$(this).parent().children().toggle();
 		self.$task.addClass("task-minimize");
 		self.$task.resizable("disable");
-		self.minimizeCallback(true);
+		taskData.windowMinimized = true;
+		self.saveTask('ui');
 	});
-	this.$task.find(".task-restore-btn").on("click", function() {
+	self.$task.find(".task-restore-btn").on("click", function() {
 		$(this).parent().children().toggle();
 		self.$task.removeClass("task-minimize");
 		self.$task.resizable("enable");
-		self.minimizeCallback(false);
+		taskData.windowMinimized = false;
+		self.saveTask('ui');
 	});
-	this.$task.find(".task-delete-btn").on("click", function() {
-		self.hideTask(function() {
-			self.$task.remove();
-		});
+	self.$task.find(".task-hide-btn").on("click", function() {
+		self.$task.hide();
+		$("#tr_" + taskData.id).removeClass("table-active");
 	});
-	this.$task.find(".task-pad").on("blur", function() {
-		var content = $(this).val();
-		if (content !== '' && content !== self.data.content) {
-			self.data.content = content;
-			self.data.modified = new Date().getTime();
-			self.saveTask(getList);
-		}
+	self.$task.find("input, textarea").on("blur", function() {
+		self.saveTask('', getList);
 	}).on("keyup", function(e) {
 		e.stopPropagation();
 	});
 
-	this.minimizeCallback = function(val) {
-		self.data.windowMinimized = val;
-		self.saveTask();
+	// jquery-ui effect callback
+	self.draggableCallback = function(event, ui) {
+		taskData.position = ui.position;
+		self.saveTask('ui');
 	};
-	this.dragCallback = function(event, ui) {
-		self.data.position = ui.position;
-		self.saveTask();
-	};
-	this.resizeCallback = function(event, ui) {
-		self.data.size = ui.size;
-		self.saveTask();
+	self.resizableCallback = function(event, ui) {
+		taskData.size = ui.size;
+		self.saveTask('ui');
 	};
 
-	this.saveTask = function(callback) {
-		restCall('/info/task', {data: self.data, method: "PUT"}, callback);
-		console.log('save task', self.data);
+	// jquery-ui effect
+	self.$task.draggable({
+		stop: self.draggableCallback
+	});
+	self.$task.resizable({
+		stop: self.resizableCallback,
+		disabled: taskData.windowMinimized
+	});
+
+	// save & delete
+	self.saveTask = function(mode, callback) {
+		var category = self.$task.find(".input-category").val();
+		var title    = self.$task.find(".input-title").val();
+		var content  = self.$task.find(".input-content").val();
+		var created  = self.$task.find(".input-created").val();
+		var startd   = self.$task.find(".input-startd").val();
+		var deadline = self.$task.find(".input-deadline").val();
+		var status   = self.$task.find('input:radio[name="status"]:checked').val();
+
+		if ($.trim(title) === '') {
+			return;
+		}
+		if (mode === 'ui'
+				|| (category !== '' && category !== taskData.category)
+				|| (title !== '' && title !== taskData.title)
+				|| (content !== '' && content !== taskData.content)
+				|| (startd !== '' && startd !== taskData.startd)
+				|| (deadline !== '' && deadline !== taskData.deadline)
+				|| (status !== '' && status !== taskData.status)) {
+			taskData.category = category;
+			taskData.title    = title;
+			taskData.content  = content;
+			taskData.created  = created;
+			taskData.startd   = startd;
+			taskData.deadline = deadline;
+			taskData.status   = status;
+//			taskData.modified = new Date().getTime();
+
+			restCall('/info/task', {data: taskData, method: "PUT"}, callback);
+			console.log('save task', taskData);
+		}
 	}
-	this.hideTask = function(callback) {
-		self.data.status = 'D';
-		restCall('/info/task', {data: self.data, method: "PUT"}, callback);
-		console.log('hide task', self.data);
-	}
-	this.deleteTask = function(callback) {
-		restCall('/info/task', {data: self.data, method: "DELETE"}, callback);
-		console.log('delete task', self.data);
+	self.deleteTask = function(callback) {
+		restCall('/info/task', {data: taskData, method: "DELETE"}, callback);
+		console.log('delete task', taskData);
 	}
 	
-	if (this.data.windowMinimized) {
+	if (taskData.windowMinimized) {
 		self.$task.addClass("task-minimize");
+		self.$task.find(".task-control").children().toggleClass("hide");
 	}
 
 }
@@ -146,47 +189,52 @@ function Task(data) {
 Task.prototype.show = function() {
 	var self = this;
 	
-	var wrapper = "taskWrapper";
-	if ($("#" + wrapper).length === 0) {
-		$("<div>", {id: wrapper}).appendTo($("body"));
+	if ($("#" + self.wrapName).length === 0) {
+		$("<div>", {id: self.wrapName}).appendTo($("body"));
 	}
+	self.$task.appendTo($("#" + self.wrapName));
 	
-	this.$task.appendTo($("#" + wrapper));
-	this.$task.draggable({
-		stop: this.dragCallback
-	});
-	this.$task.resizable({
-		stop: this.resizeCallback,
-		disabled: this.data.windowMinimized
-	});
-	
-	if (this.data.windowMinimized) {
-		self.$task.find(".task-control").children().toggle();
-	}
-
 	console.log("task show");
 };
+
+function getList() {
+	var keyword = $(".search-input").val();
+	if (keyword !== '') {
+		console.log('search keyword', keyword);
+		var task = {
+				title: keyword,
+				content: keyword
+		};
+		restCall('/info/task/find', {data: task, method: "PATCH", headers: {"admin": isListAll}}, showList);
+	} else {
+		restCall('/info/task/list', {headers: {"admin": isListAll}}, showList);
+	}
+}
 
 function showList(list) {
 	console.log('list', list.length);
 
-	$("#taskList").empty();
+	$("#taskList, #taskListCompleted").empty();
 	list.forEach(function(task, idx) {
-		$("#taskList").append(
-				$("<tr>").append(
-						$("<td>").html(idx+1),
-						$("<td>").html(task.id),
-						$("<td>").html(task.category),
-						$("<td>").html(task.title),
-						$("<td>").html(task.content),
+		$("#taskList" + (task.status === 'T' || task.status === 'C' ? "Completed" : "")).append(
+				$("<tr>", {id: "tr_" + task.id}).append(
+						$("<td>", {class: "col-task-no"}).html(idx+1),
+						$("<td>", {class: "col-task-id"}).html(task.id),
+						$("<td>", {class: "col-task-category"}).html(task.category),
+						$("<td>", {class: "col-task-title"}).html(task.title).on("click", function() {
+							$(this).parent().addClass("table-active");
+							new Task(task).show();
+						}),
+						$("<td>", {class: "col-task-content"}).html(task.content),
 						
-						$("<td>").html(task.creator),
-						$("<td>").html(task.owner),
-						$("<td>").html(task.worker),
-						$("<td>").html(task.coworker),
-						$("<td>").html(task.delegator),
+						$("<td>", {class: "col-task-creator"}).html(task.creator),
+						$("<td>", {class: "col-task-owner"}).html(task.owner),
+						$("<td>", {class: "col-task-worker"}).html(task.worker),
+						$("<td>", {class: "col-task-coworker"}).html(task.coworker),
+						$("<td>", {class: "col-task-delegator"}).html(task.delegator),
+						$("<td>", {class: "col-task-status"}).html(eval('statusMap.' + task.status)),
 
-						$("<td>").append( // status
+						/* $("<td>", {class: "col-task-"}).append( // status
 								$("<select>", {class: "w-auto border-0 bg-light bg-transparent"}).append(
 										$("<option>", {value: "unset"}).text("unset"),
 										(function() {
@@ -202,21 +250,17 @@ function showList(list) {
 										console.log('update task status');
 									});
 								})
-						),
+						), */
 						
-						$("<td>").html($.datepicker.formatDate("yy-mm-dd", new Date(task.created))),
-						$("<td>").append(
-								$("<input>", {type: "date", class: "w-auto border-0 bg-light bg-transparent"}).val($.datepicker.formatDate("yy-mm-dd", new Date(task.startd)))
-						),
-						$("<td>").append(
-								$("<input>", {type: "date", class: "w-auto border-0 bg-light bg-transparent"}).val($.datepicker.formatDate("yy-mm-dd", new Date(task.deadline)))
-						),
-						$("<td>").html($.datepicker.formatDate("yy-mm-dd", new Date(task.completed))),
-						$("<td>").html($.datepicker.formatDate("yy-mm-dd", new Date(task.modified))),
+						$("<td>", {class: "col-task-created"}).html(formatDate(task.created)),
+						$("<td>", {class: "col-task-startd"}).html(formatDate(task.startd)),
+						$("<td>", {class: "col-task-deadline"}).html(formatDate(task.deadline)),
+						$("<td>", {class: "col-task-completed"}).html(formatDate(task.completed)),
+						$("<td>", {class: "col-task-modified"}).html(formatDate(task.modified)),
 
-						$("<td>").html("L: " + task.position.left + " T: " + task.position.top),
-						$("<td>").html("W: " + task.size.width + " H: " + task.size.height),
-						$("<td>").append( // color
+						$("<td>", {class: "col-task-position"}).html("L: " + task.position.left + " T: " + task.position.top),
+						$("<td>", {class: "col-task-size"}).html("W: " + task.size.width + " H: " + task.size.height),
+						$("<td>", {class: "col-task-color"}).append( // color
 								$("<select>", {class: "w-auto border-0 bg-light bg-transparent"}).append(
 										$("<option>", {value: "unset"}).text("unset"),
 										(function() {
@@ -233,7 +277,7 @@ function showList(list) {
 									});
 								})
 						),
-						$("<td>").append( // windowMinimized
+						$("<td>", {class: "col-task-minimized"}).append( // windowMinimized
 								$("<div>", {class: 'custom-control custom-switch'}).append(
 										$("<input>", {type: 'checkbox', class: 'custom-control-input', id: 'task-' + task.id + '-mini', checked: task.windowMinimized}).on("change", function() {
 											var val = $(this).prop("checked");
@@ -246,7 +290,7 @@ function showList(list) {
 										$("<label>", {class: 'custom-control-label', for: 'task-' + task.id + '-mini'}).html(task.windowMinimized ? 'mini' : 'max')
 								)
 						),
-						$("<td>").append( // delete
+						$("<td>", {class: "col-task-action"}).append( // action
 								$("<button>", {class: 'bg-transparent border-0 text-danger'}).on("click", function() {
 									if (confirm('sure?')) {
 										var $thisNote = $(this).parent().parent();
@@ -264,30 +308,21 @@ function showList(list) {
 	});
 }
 
-function getList() {
-	var keyword = $(".search-input").val();
-	if (keyword !== '') {
-		console.log('search keyword', keyword);
-		var task = {
-				title: keyword,
-				content: keyword
-		};
-		restCall('/info/task/find', {data: task, method: "PATCH", headers: {"admin": isListAll}}, showList);
-	} else {
-		restCall('/info/task/list', {headers: {"admin": isListAll}}, showList);
-	}
-}
-
 function addEventListener() {
 	$("#switchTitleInline").on("change", function() {
 		var checked = $(this).prop("checked")
+		console.log(checked);
 		$("tbody > tr > td:nth-child(5)").each(function() {
 			if (checked) {
-				$(this).html($(this).html().replace(/<br>/g, '\n'));
+				$(this).html($(this).html().replace(/<br>/g, '\n')).css("max-width", 600);
 			} else {
-				$(this).html($(this).html().replace(/\n/g, '<br>'));
+				$(this).html($(this).html().replace(/\n/g, '<br>')).css("max-width", "none");
 			}
 		});
+	});
+
+	$("#listAll").on("change", function() {
+		isListAll = $("#listAll").prop("checked");
 	});
 
 	$(".search-input").on("keyup", function(e) {
@@ -295,15 +330,31 @@ function addEventListener() {
 			getList();
 		}
 	});
-
 	$(".search-btn").on("click", getList).click();
 	
-	$("#listAll").on("change", function() {
-		isListAll = $("#listAll").prop("checked");
-		console.log("#listAll checked", isListAll);
-	});
-
 	$(".new-task-btn").on("click", function() {
 		new Task().show();
 	});
 }
+
+function formatDate(time) {
+	//console.log('formatDate', time, typeof time);
+	if (time) {
+		if (typeof time === 'string' && time !== '') {
+			time = new Date(time);
+		} else {
+			return "";
+		}
+	} else {
+		return "";
+	}
+	return $.datepicker.formatDate("yy-mm-dd", time);
+}
+
+$(document).ready(function() {
+	addEventListener();
+	$("#switchMode").on("change", function() {
+		$("body").toggleClass("dark-mode", $(this).prop("checked"));
+	});
+});
+

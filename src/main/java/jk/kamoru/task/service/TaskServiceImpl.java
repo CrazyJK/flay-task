@@ -57,6 +57,8 @@ public class TaskServiceImpl implements TaskService {
 			}
 			if (TaskUtils.isClosedNow(task, found)) {
 				task.setCompleted(new Date());
+			} else if (TaskUtils.isOpen(task, found)) {
+				task.setCompleted(null);
 			}
 		} catch (TaskNotfoundException ignore) {}
 		taskSource.save(task);

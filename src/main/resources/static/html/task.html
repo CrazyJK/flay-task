@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Task</title>
+<title>Task list</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/webjars/fontawesome/css/font-awesome.min.css">
@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="/webjars/jquery-ui/jquery-ui.min.css"/>
 <link rel="stylesheet" href="/webjars/jquery-ui/jquery-ui.theme.min.css"/>
 <link rel="stylesheet" href="/css/task.css"/>
+<link rel="stylesheet" href="/css/task-dark.css"/>
 <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="/webjars/popper.js/umd/popper.js"></script>
 <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
@@ -16,58 +17,105 @@
 <script type="text/javascript" src="/js/rest-call.js"></script>
 <script type="text/javascript" src="/js/task.js"></script>
 </head>
-<body>
+<body class="dark-mode">
 
-	<nav class="navbar navbar-expand-sm fixed-top bg-light navbar-light border-bottom">
-		<a class="navbar-brand">Task list</a>
-		
-		<div class="input-group input-group-sm w-auto mx-3">
-			<input type="search" class="form-control search-input" placeholder="Search">
-  			<div class="input-group-append">
-    			<button class="btn btn-primary search-btn">Find</button>
-  			</div>
-		</div>		
-		
-		<div class="custom-control custom-checkbox mx-3">
-			<input type="checkbox" class="custom-control-input" id="listAll" checked="checked">
-			<label class="custom-control-label" for="listAll">List all</label>
+	<nav class="navbar navbar-expand-md fixed-top bg-light navbar-light border-bottom">
+		<a class="navbar-brand">Task list</a> 
+
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			<div class="input-group input-group-sm w-auto mx-3">
+				<input type="search" class="form-control search-input" placeholder="Search">
+	  			<div class="input-group-append">
+	    			<button class="btn btn-primary search-btn">Find</button>
+	  			</div>
+			</div>		
+			<div class="custom-control custom-checkbox mx-3">
+				<input type="checkbox" class="custom-control-input" id="listAll" checked="checked">
+				<label class="custom-control-label" for="listAll">List all</label>
+			</div>
+			<button class="btn btn-sm btn-primary new-task-btn mx-3">new Task</button>
+			<div class="custom-control custom-switch custom-control-inline mx-3 ml-auto">
+				<input type="checkbox" class="custom-control-input" id="switchMode" checked="checked">
+				<label class="custom-control-label text-secondary" for="switchMode">Dark</label>
+			</div>
 		</div>
-		<button class="btn btn-sm btn-primary mx-3 new-task-btn">new Task</button>
 	</nav>
 
 	<div class="container-fluid mt-5 py-4">
-		<table class="table table-hover table-sm table-bordered bg-light">
+		<table class="table table-hover table-sm border-bottom">
 			<thead>
 				<tr>
-					<th>No</th>
-					<th>Id</th>
-					<th>Category</th>
-					<th>Title</th>
-					<th>Content
+					<th class="col-task-no">No</th>
+					<th class="col-task-id">Id</th>
+					<th class="col-task-category">Category</th>
+					<th class="col-task-title">Title</th>
+					<th class="col-task-content" style="max-width: 600px;">Content
 						<div class="custom-control custom-switch custom-control-inline ml-3 float-right">
 	    					<input type="checkbox" class="custom-control-input" id="switchTitleInline" checked="checked">
 	    					<label class="custom-control-label text-secondary" for="switchTitleInline">nowrap</label>
 	  					</div>
 					</th>
-					<th>Creator</th>
-					<th>Owner</th>
-					<th>Worker</th>
-					<th>Coworker</th>
-					<th>Delegator</th>
-					<th>Status</th>
-					<th>Created</th>
-					<th>Startd</th>
-					<th>Deadline</th>
-					<th>Completed</th>
-					<th>Modified</th>
-					<th>Position</th>
-					<th>Size</th>
-					<th>Color</th>
-					<th>Minimized</th>
-					<th>Action</th>
+					<th class="col-task-creator">Creator</th>
+					<th class="col-task-owner">Owner</th>
+					<th class="col-task-worker">Worker</th>
+					<th class="col-task-coworker">Coworker</th>
+					<th class="col-task-delegator">Delegator</th>
+					<th class="col-task-status">Status</th>
+					<th class="col-task-created">Created</th>
+					<th class="col-task-startd">Startd</th>
+					<th class="col-task-deadline">Deadline</th>
+					<th class="col-task-completed">Completed</th>
+					<th class="col-task-modified">Modified</th>
+					<th class="col-task-position">Position</th>
+					<th class="col-task-size">Size</th>
+					<th class="col-task-color">Color</th>
+					<th class="col-task-minimized">Minimized</th>
+					<th class="col-task-action">Action</th>
 				</tr>
 			</thead>
 			<tbody id="taskList">
+			</tbody>
+		</table>
+	</div>
+
+	<div class="container-fluid mt-2 py-4">
+		<h5><i class="fa fa-tasks ml-2"></i> Closed tasks</h5>
+		<table class="table table-hover table-sm border-bottom">
+			<thead>
+				<tr>
+					<th class="col-task-no">No</th>
+					<th class="col-task-id">Id</th>
+					<th class="col-task-category">Category</th>
+					<th class="col-task-title">Title</th>
+					<th class="col-task-content" style="max-width: 600px;">Content
+						<div class="custom-control custom-switch custom-control-inline ml-3 float-right">
+	    					<input type="checkbox" class="custom-control-input" id="switchTitleInline" checked="checked">
+	    					<label class="custom-control-label text-secondary" for="switchTitleInline">nowrap</label>
+	  					</div>
+					</th>
+					<th class="col-task-creator">Creator</th>
+					<th class="col-task-owner">Owner</th>
+					<th class="col-task-worker">Worker</th>
+					<th class="col-task-coworker">Coworker</th>
+					<th class="col-task-delegator">Delegator</th>
+					<th class="col-task-status">Status</th>
+					<th class="col-task-created">Created</th>
+					<th class="col-task-startd">Startd</th>
+					<th class="col-task-deadline">Deadline</th>
+					<th class="col-task-completed">Completed</th>
+					<th class="col-task-modified">Modified</th>
+					<th class="col-task-position">Position</th>
+					<th class="col-task-size">Size</th>
+					<th class="col-task-color">Color</th>
+					<th class="col-task-minimized">Minimized</th>
+					<th class="col-task-action">Action</th>
+				</tr>
+			</thead>
+			<tbody id="taskListCompleted">
 			</tbody>
 		</table>
 	</div>

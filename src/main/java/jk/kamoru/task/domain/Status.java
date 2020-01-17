@@ -5,7 +5,7 @@ import java.util.Map;
 
 public enum Status {
 
-	I("Initiated"), R("Running"), O("Overdue"), T("Terminated"), C("Completed");
+	I("Initiated"), R("Running"), O("Overdue"), P("pause"), T("Terminated"), C("Completed");
 
 	private String statusName;
 
