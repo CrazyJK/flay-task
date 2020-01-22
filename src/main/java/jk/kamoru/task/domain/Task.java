@@ -26,7 +26,7 @@ public class Task {
 	/** task 처리자 */
 	String worker;
 	/** task 공동 처리자 */
-	String[] coworker;
+	String coworker;
 	/** 위임자 */
 	String delegator;
 	/** 상태 */
@@ -68,4 +68,5 @@ public class Task {
 		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
+
 }

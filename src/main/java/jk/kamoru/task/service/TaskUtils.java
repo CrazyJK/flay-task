@@ -138,15 +138,15 @@ public class TaskUtils {
 			result = result | StringUtils.containsIgnoreCase(task.getOwner(), searchTask.getOwner());
 		if (StringUtils.isNotBlank(searchTask.getWorker()))
 			result = result | StringUtils.containsIgnoreCase(task.getWorker(), searchTask.getWorker());
-		if (!ArrayUtils.isEmpty(searchTask.getCoworker()))
-			result = result | containsAny(task.getCoworker(), searchTask.getCoworker());
+		if (StringUtils.isNotBlank(searchTask.getCoworker()))
+			result = result | StringUtils.containsIgnoreCase(task.getCoworker(), searchTask.getCoworker());
 		if (StringUtils.isNotBlank(searchTask.getDelegator()))
 			result = result | StringUtils.containsIgnoreCase(task.getDelegator(), searchTask.getDelegator());
 
 		return result;
 	}
 
-	private static boolean containsAny(String[] coworker, String[] searchCoworker) {
+	public static boolean containsAny(String[] coworker, String[] searchCoworker) {
 		if (ArrayUtils.isEmpty(coworker)) {
 			return false;
 		} else {

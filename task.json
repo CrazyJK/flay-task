@@ -1,56 +1,4 @@
 [ {
-  "id" : 1578976032100,
-  "category" : "GW",
-  "title" : "구글일정 동기화",
-  "content" : "구글 일정 동기화 되도록 서버 설정",
-  "creator" : "남종관",
-  "owner" : "남종관",
-  "worker" : "남종관",
-  "coworker" : null,
-  "delegator" : null,
-  "status" : "I",
-  "created" : 1578976032100,
-  "modified" : 1579139461519,
-  "startd" : 1580688000000,
-  "deadline" : null,
-  "completed" : null,
-  "windowMinimized" : false,
-  "position" : {
-    "left" : 443,
-    "top" : 92
-  },
-  "size" : {
-    "width" : "30rem",
-    "height" : "16rem"
-  },
-  "color" : "WHITE"
-}, {
-  "id" : 1579139790137,
-  "category" : "루카스",
-  "title" : "품의 내용 일부 누락",
-  "content" : "유지보수계약검토 본문내용 중  \n7. 주요 계약 내용 및 이슈 사항 에 입력 후 기안하면 \n내용 날라가는 현상",
-  "creator" : "남종관",
-  "owner" : "남종관",
-  "worker" : "남종관",
-  "coworker" : null,
-  "delegator" : null,
-  "status" : "R",
-  "created" : 1579139790137,
-  "modified" : 1579139853056,
-  "startd" : 1579132800000,
-  "deadline" : null,
-  "completed" : null,
-  "windowMinimized" : false,
-  "position" : {
-    "left" : 73,
-    "top" : 350
-  },
-  "size" : {
-    "width" : "30rem",
-    "height" : "26rem"
-  },
-  "color" : "WHITE"
-}, {
   "id" : 1579141640558,
   "category" : "클라우드",
   "title" : "클라우드 모듈 백업 확보",
@@ -77,188 +25,6 @@
   },
   "color" : "WHITE"
 }, {
-  "id" : 1579147394822,
-  "category" : "CSD",
-  "title" : "문의일괄등록 기능개발",
-  "content" : "",
-  "creator" : "남종관",
-  "owner" : "남종관",
-  "worker" : "남종관",
-  "coworker" : null,
-  "delegator" : null,
-  "status" : "R",
-  "created" : 1575849600000,
-  "modified" : 1579147421533,
-  "startd" : 1575849600000,
-  "deadline" : null,
-  "completed" : null,
-  "windowMinimized" : false,
-  "position" : {
-    "left" : 372,
-    "top" : 305
-  },
-  "size" : {
-    "width" : "30rem",
-    "height" : "26rem"
-  },
-  "color" : "WHITE"
-}, {
-  "id" : 1578976101924,
-  "category" : "GW",
-  "title" : "공휴일 추가 및 색 변경",
-  "content" : "[캘린더] 공휴일 추가 및 공유일 날짜 색 변경문의",
-  "creator" : "남종관",
-  "owner" : "남종관",
-  "worker" : "남종관",
-  "coworker" : null,
-  "delegator" : null,
-  "status" : "I",
-  "created" : 1578960000000,
-  "modified" : 1579167030669,
-  "startd" : 1579478400000,
-  "deadline" : null,
-  "completed" : null,
-  "windowMinimized" : false,
-  "position" : {
-    "left" : 428,
-    "top" : 221
-  },
-  "size" : {
-    "width" : "522",
-    "height" : "256"
-  },
-  "color" : "YELLOW"
-}, {
-  "id" : 1578962451681,
-  "category" : "GW",
-  "title" : "GW 새벽 전체 로그아웃",
-  "content" : "오라클 스케줄러 잡으로 처리하면 될듯\n\nSELECT * FROM USER_JOBS\n;\nSELECT * FROM usr_cache_info WHERE app = 1",
-  "creator" : "남종관",
-  "owner" : "남종관",
-  "worker" : "남종관",
-  "coworker" : null,
-  "delegator" : null,
-  "status" : "R",
-  "created" : 1578960000000,
-  "modified" : 1579167398980,
-  "startd" : 1578960000000,
-  "deadline" : null,
-  "completed" : null,
-  "windowMinimized" : false,
-  "position" : {
-    "left" : 491,
-    "top" : 217
-  },
-  "size" : {
-    "width" : "604",
-    "height" : "443"
-  },
-  "color" : "WHITE"
-}, {
-  "id" : 1579140614890,
-  "category" : "MA",
-  "title" : "이크레더블 연동",
-  "content" : "그룹웨어 조직과 무전표 연동 이상\n\n조상욱: 연동관리, 코스트센터 연동, 배치이력에 오류",
-  "creator" : "남종관",
-  "owner" : "남종관",
-  "worker" : "남종관",
-  "coworker" : null,
-  "delegator" : null,
-  "status" : "R",
-  "created" : 1579140614890,
-  "modified" : 1579140720252,
-  "startd" : 1579132800000,
-  "deadline" : null,
-  "completed" : null,
-  "windowMinimized" : false,
-  "position" : {
-    "left" : 750,
-    "top" : 143
-  },
-  "size" : {
-    "width" : "30rem",
-    "height" : "26rem"
-  },
-  "color" : "RED"
-}, {
-  "id" : 1579141512441,
-  "category" : "HSA",
-  "title" : "전표 입력시 개선",
-  "content" : "예산부서: 불가\n결의코드: 불가\n적요: 개발\n항목 업종, 시간 추가\n",
-  "creator" : "남종관",
-  "owner" : "남종관",
-  "worker" : "남종관",
-  "coworker" : null,
-  "delegator" : null,
-  "status" : "R",
-  "created" : 1579132800000,
-  "modified" : 1579168301853,
-  "startd" : 1579132800000,
-  "deadline" : null,
-  "completed" : null,
-  "windowMinimized" : false,
-  "position" : {
-    "left" : 557,
-    "top" : 173
-  },
-  "size" : {
-    "width" : "30rem",
-    "height" : "26rem"
-  },
-  "color" : "WHITE"
-}, {
-  "id" : 1579147329543,
-  "category" : "CSD",
-  "title" : "공문발행현황 IE 오류",
-  "content" : "ActiveX 제거",
-  "creator" : "남종관",
-  "owner" : "남종관",
-  "worker" : "남종관",
-  "coworker" : null,
-  "delegator" : null,
-  "status" : "C",
-  "created" : 1575936000000,
-  "modified" : 1579169161978,
-  "startd" : 1575936000000,
-  "deadline" : 1575936000000,
-  "completed" : null,
-  "windowMinimized" : false,
-  "position" : {
-    "left" : 529,
-    "top" : 351
-  },
-  "size" : {
-    "width" : "30rem",
-    "height" : "26rem"
-  },
-  "color" : "WHITE"
-}, {
-  "id" : 1578997731314,
-  "category" : "휴머니스트",
-  "title" : "휴가 결재 연동",
-  "content" : "- 기본전제는 Humanest 시스템 사용(기존 사용중지되었던 연동로직을 원복하여 사용)하는 것으로 하였습니다.\n- 일정 및 개발공수는 별도로 산정하여 내부원가로 산정하여 진행하도록 할 예정입니다.\n\n○ 1차(지급처리)\n  ① 개인별 연차표시 - 포탈화면 '나의 업무'상단에 별도의 포틀릿으로 표시\n     : API개발 후 PMO실과 협업\n  ② 휴가신청서 - 총연차, 잔여일수 표시. 휴가기간 중 주말 체크안되므로 수동으로 입력\n     : 연차, 오전/오후반차일 경우. 주말/대휴/창립기념 등 표시 안함\n  ③ 수신부서 최종결재 완료 후 Humanest에 연차 차감반영\n\n○ 2차(일정협의)\n  ④ 연차신청일수 체크기능 보완\n     : 주말/휴무 등 체크. \n  ⑤ 연차신청취소 프로세스 개발\n     : 기존양식에 취소기능 추가, 수신부서 최종결재 완료 후 Humanest에 연차 차감취소 반영\n  ⑥ 관리자페이지 추가기능 개발\n     - 임직원 연차 일괄등록, 개별등록/수정/삭제기능\n     - 개별 잔여연차 확인, EXCEL변환, 메일발송기능",
-  "creator" : "남종관",
-  "owner" : "남종관",
-  "worker" : "남종관",
-  "coworker" : null,
-  "delegator" : null,
-  "status" : "R",
-  "created" : 1578960000000,
-  "modified" : 1579141162388,
-  "startd" : 1579046400000,
-  "deadline" : null,
-  "completed" : null,
-  "windowMinimized" : false,
-  "position" : {
-    "left" : 322,
-    "top" : 61
-  },
-  "size" : {
-    "width" : "1194",
-    "height" : "758"
-  },
-  "color" : "WHITE"
-}, {
   "id" : 1579240831129,
   "category" : "Javascript",
   "title" : "Blob, FileReader",
@@ -281,6 +47,240 @@
   },
   "size" : {
     "width" : "36rem",
+    "height" : "26rem"
+  },
+  "color" : "WHITE"
+}, {
+  "id" : 1578962451681,
+  "category" : "GW",
+  "title" : "GW 새벽 전체 로그아웃",
+  "content" : "오라클 스케줄러 잡으로 처리하면 될듯\n\nSELECT * FROM USER_JOBS\n;\nSELECT * FROM usr_cache_info WHERE app = 1",
+  "creator" : "남종관",
+  "owner" : "남종관",
+  "worker" : "남종관",
+  "coworker" : null,
+  "delegator" : null,
+  "status" : "P",
+  "created" : 1578960000000,
+  "modified" : 1579579152537,
+  "startd" : 1578960000000,
+  "deadline" : null,
+  "completed" : null,
+  "windowMinimized" : false,
+  "position" : {
+    "left" : 491,
+    "top" : 217
+  },
+  "size" : {
+    "width" : "604",
+    "height" : "443"
+  },
+  "color" : "WHITE"
+}, {
+  "id" : 1579141512441,
+  "category" : "HSA",
+  "title" : "전표 입력시 개선",
+  "content" : "예산부서: 불가\n결의코드: 불가\n적요: 개발\n항목 업종, 시간 추가\n",
+  "creator" : "남종관",
+  "owner" : "남종관",
+  "worker" : "남종관",
+  "coworker" : null,
+  "delegator" : null,
+  "status" : "P",
+  "created" : 1579132800000,
+  "modified" : 1579168301853,
+  "startd" : 1579132800000,
+  "deadline" : null,
+  "completed" : null,
+  "windowMinimized" : false,
+  "position" : {
+    "left" : 558,
+    "top" : 172
+  },
+  "size" : {
+    "width" : "30rem",
+    "height" : "26rem"
+  },
+  "color" : "WHITE"
+}, {
+  "id" : 1579140614890,
+  "category" : "MA",
+  "title" : "이크레더블 연동",
+  "content" : "그룹웨어 조직과 무전표 연동 이상\n\n조상욱: 연동관리, 코스트센터 연동, 배치이력에 오류",
+  "creator" : "남종관",
+  "owner" : "남종관",
+  "worker" : "남종관",
+  "coworker" : "",
+  "delegator" : "",
+  "status" : "R",
+  "created" : 1579132800000,
+  "modified" : 1579583183465,
+  "startd" : 1579132800000,
+  "deadline" : null,
+  "completed" : null,
+  "windowMinimized" : false,
+  "position" : {
+    "left" : 1320,
+    "top" : 79
+  },
+  "size" : {
+    "width" : "30rem",
+    "height" : "26rem"
+  },
+  "color" : "RED"
+}, {
+  "id" : 1579139790137,
+  "category" : "Lukas",
+  "title" : "품의 내용 일부 누락",
+  "content" : "유지보수계약검토 본문내용 중  \n7. 주요 계약 내용 및 이슈 사항 에 입력 후 기안하면 \n내용 날라가는 현상",
+  "creator" : "남종관",
+  "owner" : "남종관",
+  "worker" : "남종관",
+  "coworker" : "",
+  "delegator" : "",
+  "status" : "R",
+  "created" : 1579132800000,
+  "modified" : 1579587764180,
+  "startd" : 1579132800000,
+  "deadline" : null,
+  "completed" : null,
+  "windowMinimized" : false,
+  "position" : {
+    "left" : 833,
+    "top" : 113
+  },
+  "size" : {
+    "width" : "30rem",
+    "height" : "26rem"
+  },
+  "color" : "WHITE"
+}, {
+  "id" : 1578976101924,
+  "category" : "GW",
+  "title" : "공휴일 추가 및 색 변경",
+  "content" : "[캘린더] 공휴일 추가 및 공유일 날짜 색 변경문의\n제품에서 지원됨. 기능 가이드 답변으로 완료 ",
+  "creator" : "남종관",
+  "owner" : "남종관",
+  "worker" : "남종관",
+  "coworker" : "",
+  "delegator" : "",
+  "status" : "C",
+  "created" : 1578960000000,
+  "modified" : 1579583140846,
+  "startd" : 1579478400000,
+  "deadline" : null,
+  "completed" : 1579568356927,
+  "windowMinimized" : false,
+  "position" : {
+    "left" : 380,
+    "top" : 162
+  },
+  "size" : {
+    "width" : "681",
+    "height" : "309"
+  },
+  "color" : "YELLOW"
+}, {
+  "id" : 1578976032100,
+  "category" : "GW",
+  "title" : "구글일정 동기화",
+  "content" : "구글 일정 동기화 되도록 서버 설정",
+  "creator" : "남종관",
+  "owner" : "남종관",
+  "worker" : "남종관",
+  "coworker" : "배희주",
+  "delegator" : "",
+  "status" : "I",
+  "created" : 1578960000000,
+  "modified" : 1579582665093,
+  "startd" : 1580688000000,
+  "deadline" : null,
+  "completed" : null,
+  "windowMinimized" : false,
+  "position" : {
+    "left" : 285,
+    "top" : 101
+  },
+  "size" : {
+    "width" : "754",
+    "height" : "626"
+  },
+  "color" : "WHITE"
+}, {
+  "id" : 1578997731314,
+  "category" : "Humanest",
+  "title" : "휴가 결재 연동",
+  "content" : "1차(지급처리) 건을 일정\n\n일정\n  1. 개발: 1/20 ~ 1/31. 6 M/D\n  2. 테스트: 2/3 ~ 2/6. 4 M/D\n  3. 운영반영: 2/7 (금)\n\n개발 상세\n  1. Humanest 개발: \n    - API - 개인 연차 정보 반환(JSON) : 포탈 포트릿 용\n    - API - 사용 연차 차감 : 결재 연동 용\n    - 휴가 관리 기능 중 미비점 개선\n  2. GW 결재 \n    - 휴가 서식 연동 개발\n",
+  "creator" : "남종관",
+  "owner" : "남종관",
+  "worker" : "남종관",
+  "coworker" : "정재성, 이어진",
+  "delegator" : "",
+  "status" : "R",
+  "created" : 1578960000000,
+  "modified" : 1579587355408,
+  "startd" : 1579478400000,
+  "deadline" : 1581033600000,
+  "completed" : null,
+  "windowMinimized" : false,
+  "position" : {
+    "left" : 488,
+    "top" : 31
+  },
+  "size" : {
+    "width" : "548",
+    "height" : "551"
+  },
+  "color" : "WHITE"
+}, {
+  "id" : 1579147329543,
+  "category" : "CSD",
+  "title" : "공문발행현황 IE 오류",
+  "content" : "ActiveX 제거\n완료\n",
+  "creator" : "남종관",
+  "owner" : "남종관",
+  "worker" : "남종관",
+  "coworker" : "",
+  "delegator" : "",
+  "status" : "C",
+  "created" : 1575936000000,
+  "modified" : 1579592223137,
+  "startd" : 1575936000000,
+  "deadline" : 1575936000000,
+  "completed" : 1579564800000,
+  "windowMinimized" : false,
+  "position" : {
+    "left" : 644,
+    "top" : 78
+  },
+  "size" : {
+    "width" : "30rem",
+    "height" : "26rem"
+  },
+  "color" : "WHITE"
+}, {
+  "id" : 1579147394822,
+  "category" : "CSD",
+  "title" : "문의일괄등록 기능개발",
+  "content" : "엑셀 업로드\n일괄 기입\n",
+  "creator" : "남종관",
+  "owner" : "남종관",
+  "worker" : "남종관",
+  "coworker" : "이아람",
+  "delegator" : "",
+  "status" : "R",
+  "created" : 1575849600000,
+  "modified" : 1579605055943,
+  "startd" : 1575849600000,
+  "deadline" : null,
+  "completed" : null,
+  "windowMinimized" : false,
+  "position" : {
+    "left" : 482,
+    "top" : 127
+  },
+  "size" : {
+    "width" : "30rem",
     "height" : "26rem"
   },
   "color" : "WHITE"

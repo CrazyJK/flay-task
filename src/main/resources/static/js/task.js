@@ -50,28 +50,34 @@ function Task(data) {
 	
 	// make ui
 	self.$task = $(
-			  '<div class="task">'
+			  '<div class="task" id="task-' + taskData.id + '">'
 			+ '  <div class="task-control">'
+			+ '    <a href="#" class="task-save-btn mx-4"><i class="fa fa-check"></i></a>'
 			+ '    <a href="#" class="task-minimize-btn"><i class="fa fa-window-minimize"></i></a>'
 			+ '    <a href="#" class="task-restore-btn hide"><i class="fa fa-window-restore"></i></a>'
 			+ '    <a href="#" class="task-hide-btn"><i class="fa fa-window-close"></i></a>'
 			+ '  </div>'
 			+ '  <div class="task-header">'
-			+ '    <h5>Task</h5>'
+			+ '    <h5>Task-' + taskData.id + '</h5>'
 			+ '  </div>'
 			+ '  <div class="task-category">'
-			+ '    <input class="input-category" placeholder="Task category" id="taskCategory">'
+			+ '    <input name="category" class="input-category" placeholder="Task category">'
 			+ '  </div>'
 			+ '  <div class="task-title">'
-			+ '    <input class="input-title" placeholder="Task title">'
-			+ '  </div>'
-			+ '  <div class="task-schedule d-flex justify-content-between small">'
-			+ '    <input type="date" class="input-created" placeholder="Create date">'
-			+ '    <input type="date" class="input-startd" placeholder="Start date">'
-			+ '    <input type="date" class="input-deadline" placeholder="Deadline">'
+			+ '    <input name="title" class="input-title" placeholder="Task title">'
 			+ '  </div>'
 			+ '  <div class="task-body">'
-			+ '    <textarea class="input-content" placeholder="Task content"></textarea>'
+			+ '    <textarea name="content" class="input-content" placeholder="Task content"></textarea>'
+			+ '  </div>'
+			+ '  <div class="task-person d-flex justify-content-between">'
+			+ '    <input name="worker"    class="input-worker" placeholder="Worker">'
+			+ '    <input name="coworker"  class="input-coworker" placeholder="Coworker">'
+			+ '    <input name="delegator" class="input-delegator flex-grow-1" placeholder="Delegator">'
+			+ '  </div>'
+			+ '  <div class="task-schedule d-flex justify-content-between small">'
+			+ '    <input type="date" name="created"  class="input-created"  placeholder="Create date">'
+			+ '    <input type="date" name="startd"   class="input-startd"   placeholder="Start date">'
+			+ '    <input type="date" name="deadline" class="input-deadline" placeholder="Deadline">'
 			+ '  </div>'
 			+ '  <div class="task-tail small">'
 			+ '    <label><input type="radio" name="status" value="R">Resume</label>'
@@ -79,6 +85,10 @@ function Task(data) {
 			+ '    <label><input type="radio" name="status" value="T">Terminate</label>'
 			+ '    <label><input type="radio" name="status" value="C">Complete</label>'
 			+ '    <label class="task-time"></label>'
+			+ '  </div>'
+			+ '  <div style="display: none;">'
+			+ '    <input name="id" value="' + taskData.id + '">'
+			+ '    <input name="completed" class="input-completed">'
 			+ '  </div>'
 			+ '</div>').attr("id", "task_" + taskData.id).addClass(taskData.color).css({
 				left: taskData.position.left,
@@ -91,11 +101,19 @@ function Task(data) {
 	self.$task.find(".input-category").val(taskData.category);
 	self.$task.find(".input-title").val(taskData.title);
 	self.$task.find(".input-content").val(taskData.content);
+	self.$task.find(".input-worker").val(taskData.worker);
+	self.$task.find(".input-coworker").val(taskData.coworker);
+	self.$task.find(".input-delegator").val(taskData.delegator);
 	self.$task.find(".input-created").val(formatDate(taskData.created));
 	self.$task.find(".input-startd").val(formatDate(taskData.startd));
 	self.$task.find(".input-deadline").val(formatDate(taskData.deadline));
+	self.$task.find(".input-completed").val(formatDate(taskData.completed));
 	self.$task.find(".task-time").html(formatDate(taskData.modified));
 	self.$task.find("input:radio[name='status'][value='" + ("IRO".indexOf(taskData.status) > -1 ? "R" : taskData.status) + "']").prop("checked", true);
+	
+	self.$task.on("blur", function(e) {
+		console.log("task blur", e);
+	});
 	
 	// task event
 	self.$task.find(".task-minimize-btn").on("click", function() {
@@ -103,33 +121,46 @@ function Task(data) {
 		self.$task.addClass("task-minimize");
 		self.$task.resizable("disable");
 		taskData.windowMinimized = true;
-		self.saveTask('ui');
+//		self.saveTask('ui');
 	});
 	self.$task.find(".task-restore-btn").on("click", function() {
 		$(this).parent().children().toggle();
 		self.$task.removeClass("task-minimize");
 		self.$task.resizable("enable");
 		taskData.windowMinimized = false;
-		self.saveTask('ui');
+//		self.saveTask('ui');
 	});
 	self.$task.find(".task-hide-btn").on("click", function() {
-		self.$task.hide();
+		self.$task.remove();
 		$("#tr_" + taskData.id).removeClass("table-active");
 	});
+	/*
 	self.$task.find("input, textarea").on("blur", function() {
 		self.saveTask('', getList);
 	}).on("keyup", function(e) {
 		e.stopPropagation();
 	});
+	 */
+	self.$task.find("input, textarea").on("blur", function() {
+		self.$task.toggleClass("change", self.isContentChange());
+	});
+	self.$task.find("input, textarea").on("keyup", function(e) {
+		e.stopPropagation();
+	});
+	self.$task.find(".task-save-btn").on("click", function() {
+		if (self.isContentChange()) {
+			self.saveTask('', getList);
+		}
+	});
 
 	// jquery-ui effect callback
 	self.draggableCallback = function(event, ui) {
 		taskData.position = ui.position;
-		self.saveTask('ui');
+//		self.saveTask('ui');
 	};
 	self.resizableCallback = function(event, ui) {
 		taskData.size = ui.size;
-		self.saveTask('ui');
+//		self.saveTask('ui');
 	};
 
 	// jquery-ui effect
@@ -141,34 +172,70 @@ function Task(data) {
 		disabled: taskData.windowMinimized
 	});
 
+	self.isContentChange = function() {
+		var category  = self.$task.find(".input-category").val();
+		var title     = self.$task.find(".input-title").val();
+		var content   = self.$task.find(".input-content").val();
+		var worker    = self.$task.find(".input-worker").val();
+		var coworker  = self.$task.find(".input-coworker").val();
+		var delegator = self.$task.find(".input-delegator").val();
+		var created   = self.$task.find(".input-created").val();
+		var startd    = self.$task.find(".input-startd").val();
+		var deadline  = self.$task.find(".input-deadline").val();
+		var completed = self.$task.find(".input-completed").val();
+		var status    = self.$task.find('input:radio[name="status"]:checked').val();
+		
+		var isEqualDate = function(date1, date2) {
+			if ((date1 == null || date1 === '') && (date2 == null || date2 === '')) {
+				return true;
+			} else if (date2 !== null && date2 !== '') {
+				return date2.indexOf(date1) === 0;
+			} else {
+				return false;
+			}
+		}
+		
+		return (category  !== '' && category  !== taskData.category)
+			|| (title     !== '' && title     !== taskData.title)
+			|| (content   !== '' && content   !== taskData.content)
+			|| (worker    !== '' && worker    !== taskData.worker)
+			|| (coworker  !== '' && coworker  !== taskData.coworker)
+			|| (delegator !== '' && delegator !== taskData.delegator)
+			|| (created   !== '' && !isEqualDate(created,  taskData.created))
+			|| (startd    !== '' && !isEqualDate(startd,   taskData.startd))
+			|| (deadline  !== '' && !isEqualDate(deadline, taskData.deadline))
+			|| (status    !== '' && status    !== taskData.status);
+	}
+	
 	// save & delete
 	self.saveTask = function(mode, callback) {
-		var category = self.$task.find(".input-category").val();
-		var title    = self.$task.find(".input-title").val();
-		var content  = self.$task.find(".input-content").val();
-		var created  = self.$task.find(".input-created").val();
-		var startd   = self.$task.find(".input-startd").val();
-		var deadline = self.$task.find(".input-deadline").val();
-		var status   = self.$task.find('input:radio[name="status"]:checked').val();
+		var category  = self.$task.find(".input-category").val();
+		var title     = self.$task.find(".input-title").val();
+		var content   = self.$task.find(".input-content").val();
+		var worker    = self.$task.find(".input-worker").val();
+		var coworker  = self.$task.find(".input-coworker").val();
+		var delegator = self.$task.find(".input-delegator").val();
+		var status    = self.$task.find('input:radio[name="status"]:checked').val();
+		var created   = self.$task.find(".input-created").val();
+		var startd    = self.$task.find(".input-startd").val();
+		var deadline  = self.$task.find(".input-deadline").val();
+		var completed = self.$task.find(".input-completed").val();
 
 		if ($.trim(title) === '') {
 			return;
-		}
-		if (mode === 'ui'
-				|| (category !== '' && category !== taskData.category)
-				|| (title !== '' && title !== taskData.title)
-				|| (content !== '' && content !== taskData.content)
-				|| (startd !== '' && startd !== taskData.startd)
-				|| (deadline !== '' && deadline !== taskData.deadline)
-				|| (status !== '' && status !== taskData.status)) {
-			taskData.category = category;
-			taskData.title    = title;
-			taskData.content  = content;
-			taskData.created  = created;
-			taskData.startd   = startd;
-			taskData.deadline = deadline;
-			taskData.status   = status;
-//			taskData.modified = new Date().getTime();
+		} else if (mode === 'ui' || self.isContentChange()) {
+			taskData.category  = category;
+			taskData.title     = title;
+			taskData.content   = content;
+			taskData.worker    = worker;
+			taskData.coworker  = coworker;
+			taskData.delegator = delegator;
+			taskData.status    = status;
+			taskData.created   = created;
+//			taskData.modified  = new Date().getTime();
+			taskData.startd    = startd;
+			taskData.deadline  = deadline;
+			taskData.completed = completed;
 
 			restCall('/info/task', {data: taskData, method: "PUT"}, callback);
 			console.log('save task', taskData);
@@ -213,6 +280,8 @@ function getList() {
 
 function showList(list) {
 	console.log('list', list.length);
+	
+	$(".task.change").removeClass("change");
 
 	$("#taskList, #taskListCompleted").empty();
 	list.forEach(function(task, idx) {
@@ -222,8 +291,10 @@ function showList(list) {
 						$("<td>", {class: "col-task-id"}).html(task.id),
 						$("<td>", {class: "col-task-category"}).html(task.category),
 						$("<td>", {class: "col-task-title"}).html(task.title).on("click", function() {
-							$(this).parent().addClass("table-active");
-							new Task(task).show();
+							if ($("#task_" + task.id).length === 0) {
+								$(this).parent().addClass("table-active");
+								new Task(task).show();
+							}
 						}),
 						$("<td>", {class: "col-task-content"}).html(task.content),
 						

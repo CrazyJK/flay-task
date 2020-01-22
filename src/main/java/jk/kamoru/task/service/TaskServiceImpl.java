@@ -48,7 +48,7 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	public void persist(Task task) {
-		log.debug("persist {}", task);
+		log.debug("persist in  {}", task);
 		task.setStatus(TaskUtils.takeStaus(task));
 		try {
 			Task found = taskSource.get(task);
@@ -62,6 +62,7 @@ public class TaskServiceImpl implements TaskService {
 			}
 		} catch (TaskNotfoundException ignore) {}
 		taskSource.save(task);
+		log.debug("persist out {}", task);
 	}
 
 	@Override

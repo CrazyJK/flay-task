@@ -6,7 +6,6 @@ body.dark-mode {
 	transition: .5s !important;
 }
 body.dark-mode nav,
-body.dark-mode input,
 body.dark-mode button,
 body.dark-mode table {
 	background-color: #242424 !important;
@@ -31,6 +30,11 @@ body.dark-mode table.table-hover tbody tr:hover {
 	color: #fff !important;
 }
 
+body.dark-mode .form-control {
+	background-color: #242424 !important;
+	border-color: #333 !important;
+	color: var(--light) !important;
+}
 body.dark-mode .custom-control-label::before {
     border-color: #383232 !important;
 	background-color: #383232 !important;
@@ -42,6 +46,9 @@ body.dark-mode .custom-control-input:checked ~ .custom-control-label::before {
 body.dark-mode input[type="checkbox"].custom-control-input:focus {
 	outline: none !important;
 	outline-offset: 0 !important;
+}
+body.dark-mode select {
+	color: rgb(160, 160, 160) !important;
 }
 
 body.dark-mode .form-control:focus {
