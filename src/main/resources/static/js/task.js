@@ -2,7 +2,7 @@
  * 
  */
 
-var taskColors = ['yellow', 'red'], isListAll = false;
+var isListAll = false;
 var statusMap, colorList;
 
 restCall("/info/task/statusMap", {async: false}, function(map) {
@@ -111,24 +111,18 @@ function Task(data) {
 	self.$task.find(".task-time").html(formatDate(taskData.modified));
 	self.$task.find("input:radio[name='status'][value='" + ("IRO".indexOf(taskData.status) > -1 ? "R" : taskData.status) + "']").prop("checked", true);
 	
-	self.$task.on("blur", function(e) {
-		console.log("task blur", e);
-	});
-	
 	// task event
 	self.$task.find(".task-minimize-btn").on("click", function() {
 		$(this).parent().children().toggle();
 		self.$task.addClass("task-minimize");
 		self.$task.resizable("disable");
 		taskData.windowMinimized = true;
-//		self.saveTask('ui');
 	});
 	self.$task.find(".task-restore-btn").on("click", function() {
 		$(this).parent().children().toggle();
 		self.$task.removeClass("task-minimize");
 		self.$task.resizable("enable");
 		taskData.windowMinimized = false;
-//		self.saveTask('ui');
 	});
 	self.$task.find(".task-hide-btn").on("click", function() {
 		self.$task.remove();
@@ -136,7 +130,7 @@ function Task(data) {
 	});
 	/*
 	self.$task.find("input, textarea").on("blur", function() {
-		self.saveTask('', getList);
+		self.saveTask(getList);
 	}).on("keyup", function(e) {
 		e.stopPropagation();
 	});
@@ -156,11 +150,9 @@ function Task(data) {
 	// jquery-ui effect callback
 	self.draggableCallback = function(event, ui) {
 		taskData.position = ui.position;
-//		self.saveTask('ui');
 	};
 	self.resizableCallback = function(event, ui) {
 		taskData.size = ui.size;
-//		self.saveTask('ui');
 	};
 
 	// jquery-ui effect
@@ -208,7 +200,7 @@ function Task(data) {
 	}
 	
 	// save & delete
-	self.saveTask = function(mode, callback) {
+	self.saveTask = function(callback) {
 		var category  = self.$task.find(".input-category").val();
 		var title     = self.$task.find(".input-title").val();
 		var content   = self.$task.find(".input-content").val();
@@ -223,7 +215,7 @@ function Task(data) {
 
 		if ($.trim(title) === '') {
 			return;
-		} else if (mode === 'ui' || self.isContentChange()) {
+		} else if (self.isContentChange()) {
 			taskData.category  = category;
 			taskData.title     = title;
 			taskData.content   = content;
@@ -333,7 +325,6 @@ function showList(list) {
 						$("<td>", {class: "col-task-size"}).html("W: " + task.size.width + " H: " + task.size.height),
 						$("<td>", {class: "col-task-color"}).append( // color
 								$("<select>", {class: "w-auto border-0 bg-light bg-transparent"}).append(
-										$("<option>", {value: "unset"}).text("unset"),
 										(function() {
 											var options = [];
 											colorList.forEach(function(color) {
@@ -377,12 +368,13 @@ function showList(list) {
 				)
 		);
 	});
+
+	$("#switchContentNowrap").trigger("change");
 }
 
 function addEventListener() {
-	$("#switchTitleInline").on("change", function() {
-		var checked = $(this).prop("checked")
-		console.log(checked);
+	$("#switchContentNowrap").on("change", function() {
+		var checked = $(this).prop("checked");
 		$("tbody > tr > td:nth-child(5)").each(function() {
 			if (checked) {
 				$(this).html($(this).html().replace(/<br>/g, '\n')).css("max-width", 600);
@@ -390,7 +382,11 @@ function addEventListener() {
 				$(this).html($(this).html().replace(/\n/g, '<br>')).css("max-width", "none");
 			}
 		});
+		LocalStorageItem.set('task.content.nowrap', checked);
 	});
+	if (LocalStorageItem.getBoolean('task.content.nowrap', false)) {
+		$("#switchContentNowrap ~ label").click();
+	}
 
 	$("#listAll").on("change", function() {
 		isListAll = $("#listAll").prop("checked");
@@ -401,15 +397,28 @@ function addEventListener() {
 			getList();
 		}
 	});
-	$(".search-btn").on("click", getList).click();
-	
+	$(".search-btn").on("click", getList);
+
 	$(".new-task-btn").on("click", function() {
 		new Task().show();
+	});
+	
+	$("#switchMode").on("change", function() {
+		var checked = $(this).prop("checked");
+		$("body").toggleClass("dark-mode", checked);
+		LocalStorageItem.set('task.theme.dark', checked);
+	});
+	var isDarkTheme = LocalStorageItem.getBoolean('task.theme.dark', false);
+	if (isDarkTheme) {
+		$("#switchMode ~ label").click();
+	}
+
+	$(".popup-gw-btn").on("click", function() {
+		window.open("http://gws.handysoft.co.kr", "gws", "width=1800, height=960");
 	});
 }
 
 function formatDate(time) {
-	//console.log('formatDate', time, typeof time);
 	if (time) {
 		if (typeof time === 'string' && time !== '') {
 			time = new Date(time);
@@ -424,8 +433,6 @@ function formatDate(time) {
 
 $(document).ready(function() {
 	addEventListener();
-	$("#switchMode").on("change", function() {
-		$("body").toggleClass("dark-mode", $(this).prop("checked"));
-	});
+	getList();
 });
 

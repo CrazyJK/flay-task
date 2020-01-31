@@ -15,6 +15,7 @@
 <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/webjars/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/js/rest-call.js"></script>
+<script type="text/javascript" src="/js/utils.js"></script>
 <script type="text/javascript" src="/js/task.js"></script>
 </head>
 <body>
@@ -38,10 +39,15 @@
 				<label class="custom-control-label" for="listAll">List all</label>
 			</div>
 			<button class="btn btn-sm btn-primary new-task-btn mx-3">new Task</button>
+			<div class="custom-control custom-switch custom-control-inline ml-3 float-right">
+				<input type="checkbox" class="custom-control-input" id="switchContentNowrap">
+				<label class="custom-control-label text-secondary" for="switchContentNowrap">nowrap</label>
+			</div>
 			<div class="custom-control custom-switch custom-control-inline mx-3 ml-auto">
 				<input type="checkbox" class="custom-control-input" id="switchMode">
 				<label class="custom-control-label text-secondary" for="switchMode">Dark</label>
 			</div>
+			<button class="btn btn-sm btn-primary popup-gw-btn mx-3">GW</button>
 		</div>
 	</nav>
 
@@ -53,12 +59,7 @@
 					<th class="col-task-id">Id</th>
 					<th class="col-task-category">Category</th>
 					<th class="col-task-title">Title</th>
-					<th class="col-task-content" style="max-width: 600px;">Content
-						<div class="custom-control custom-switch custom-control-inline ml-3 float-right">
-	    					<input type="checkbox" class="custom-control-input" id="switchTitleInline" checked="checked">
-	    					<label class="custom-control-label text-secondary" for="switchTitleInline">nowrap</label>
-	  					</div>
-					</th>
+					<th class="col-task-content" style="max-width: 600px;">Content</th>
 					<th class="col-task-creator">Creator</th>
 					<th class="col-task-owner">Owner</th>
 					<th class="col-task-worker">Worker</th>
@@ -91,12 +92,7 @@
 					<th class="col-task-id">Id</th>
 					<th class="col-task-category">Category</th>
 					<th class="col-task-title">Title</th>
-					<th class="col-task-content" style="max-width: 600px;">Content
-						<div class="custom-control custom-switch custom-control-inline ml-3 float-right">
-	    					<input type="checkbox" class="custom-control-input" id="switchTitleInline" checked="checked">
-	    					<label class="custom-control-label text-secondary" for="switchTitleInline">nowrap</label>
-	  					</div>
-					</th>
+					<th class="col-task-content" style="max-width: 600px;">Content</th>
 					<th class="col-task-creator">Creator</th>
 					<th class="col-task-owner">Owner</th>
 					<th class="col-task-worker">Worker</th>
