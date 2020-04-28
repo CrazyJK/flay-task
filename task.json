@@ -1,30 +1,4 @@
 [ {
-  "id" : 1579141640558,
-  "category" : "클라우드",
-  "title" : "클라우드 모듈 백업 확보",
-  "content" : "서대영에게 백업 모듈 받아오기",
-  "creator" : "남종관",
-  "owner" : "남종관",
-  "worker" : "남종관",
-  "coworker" : null,
-  "delegator" : null,
-  "status" : "R",
-  "created" : 1576540800000,
-  "modified" : 1579147152510,
-  "startd" : 1576540800000,
-  "deadline" : null,
-  "completed" : null,
-  "windowMinimized" : false,
-  "position" : {
-    "left" : 698,
-    "top" : 4
-  },
-  "size" : {
-    "width" : "30rem",
-    "height" : "26rem"
-  },
-  "color" : "WHITE"
-}, {
   "id" : 1579240831129,
   "category" : "Javascript",
   "title" : "Blob, FileReader",
@@ -100,32 +74,6 @@
   "size" : {
     "width" : "30rem",
     "height" : "26rem"
-  },
-  "color" : "WHITE"
-}, {
-  "id" : 1578997731314,
-  "category" : "Humanest",
-  "title" : "휴가 결재 연동",
-  "content" : "1차(지급처리) 건을 일정\n\n일정\n  1. 개발: 1/20 ~ 1/31. 6 M/D\n  2. 테스트: 2/3 ~ 2/6. 4 M/D\n  3. 운영반영: 2/7 (금)\n\n개발 상세\n  1. Humanest 개발: \n    - API - 개인 연차 정보 반환(JSON) : 포탈 포트릿 용\n    - API - 사용 연차 차감 : 결재 연동 용\n    - 휴가 관리 기능 중 미비점 개선\n  2. GW 결재 \n    - 휴가 서식 연동 개발\n",
-  "creator" : "남종관",
-  "owner" : "남종관",
-  "worker" : "남종관",
-  "coworker" : "정재성, 이어진",
-  "delegator" : "",
-  "status" : "R",
-  "created" : 1578960000000,
-  "modified" : 1579587355408,
-  "startd" : 1579478400000,
-  "deadline" : 1581033600000,
-  "completed" : null,
-  "windowMinimized" : false,
-  "position" : {
-    "left" : 488,
-    "top" : 31
-  },
-  "size" : {
-    "width" : "548",
-    "height" : "551"
   },
   "color" : "WHITE"
 }, {
@@ -233,32 +181,6 @@
   },
   "color" : "WHITE"
 }, {
-  "id" : 1578962451681,
-  "category" : "GW",
-  "title" : "GW 새벽 전체 로그아웃",
-  "content" : "오라클 스케줄러 잡으로 처리하면 될듯\n\nSELECT * FROM USER_JOBS\n;\nSELECT * FROM usr_cache_info WHERE app = 1",
-  "creator" : "남종관",
-  "owner" : "남종관",
-  "worker" : "남종관",
-  "coworker" : "",
-  "delegator" : "",
-  "status" : "R",
-  "created" : 1578960000000,
-  "modified" : 1580444186543,
-  "startd" : 1578960000000,
-  "deadline" : null,
-  "completed" : null,
-  "windowMinimized" : false,
-  "position" : {
-    "left" : 491,
-    "top" : 217
-  },
-  "size" : {
-    "width" : "604",
-    "height" : "443"
-  },
-  "color" : "WHITE"
-}, {
   "id" : 1578976101924,
   "category" : "GW",
   "title" : "공휴일 추가 및 색 변경",
@@ -307,6 +229,240 @@
   },
   "size" : {
     "width" : "30rem",
+    "height" : "26rem"
+  },
+  "color" : "WHITE"
+}, {
+  "id" : 1578962451681,
+  "category" : "GW",
+  "title" : "GW 새벽 전체 로그아웃",
+  "content" : "오라클 스케줄러 잡으로 처리하면 될듯\n\nSELECT * FROM USER_JOBS\n;\nSELECT * FROM usr_cache_info WHERE app = 1",
+  "creator" : "남종관",
+  "owner" : "남종관",
+  "worker" : "남종관",
+  "coworker" : "",
+  "delegator" : "",
+  "status" : "P",
+  "created" : 1578960000000,
+  "modified" : 1580864201796,
+  "startd" : 1578960000000,
+  "deadline" : null,
+  "completed" : null,
+  "windowMinimized" : false,
+  "position" : {
+    "left" : 491,
+    "top" : 217
+  },
+  "size" : {
+    "width" : "604",
+    "height" : "443"
+  },
+  "color" : "WHITE"
+}, {
+  "id" : 1578997731314,
+  "category" : "Humanest",
+  "title" : "휴가 결재 연동",
+  "content" : "1차(지급처리) 건을 일정\n\n일정\n  1. 개발: 1/20 ~ 1/31. 6 M/D\n  2. 테스트: 2/3 ~ 2/6. 4 M/D\n  3. 운영반영: 2/7 (금)\n\n개발 상세\n  1. Humanest 개발: \n    - API - 개인 연차 정보 반환(JSON) : 포탈 포트릿 용\n    - API - 사용 연차 차감 : 결재 연동 용\n    - 휴가 관리 기능 중 미비점 개선\n  2. GW 결재 \n    - 휴가 서식 연동 개발\n\n협의할 내용\n1. 연동 시점. \n    언제?  기안부서 결재 완료시\n2. 사용연차 기초 데이터 \n    Open전 전달 후 일괄 입력\n3. 가산연차는 어떻게 들어갔나\n    이상엽, 김용세는 없음\n4. 현 휴가 종류 정리\n    연차 차감될 휴가는 뭔가?\n    type: 1 연차, 오전반차, 오후반차, \n          3 경조휴가\n          4 공가\n          6 산전산후휴가\n          7 병가\n          8 대체휴가\n          etc 교육, 직출\n5. Open\n    2월 10일 월요일\n*. 개인 정보 수정 가능한 방법 찾기\n",
+  "creator" : "남종관",
+  "owner" : "남종관",
+  "worker" : "남종관",
+  "coworker" : "배희주, 이아람",
+  "delegator" : "",
+  "status" : "C",
+  "created" : 1578960000000,
+  "modified" : 1581643223414,
+  "startd" : 1579478400000,
+  "deadline" : 1581033600000,
+  "completed" : 1581643223414,
+  "windowMinimized" : false,
+  "position" : {
+    "left" : 489,
+    "top" : 32
+  },
+  "size" : {
+    "width" : "764",
+    "height" : "821"
+  },
+  "color" : "WHITE"
+}, {
+  "id" : 1580860880144,
+  "category" : "Lukas",
+  "title" : "파이프라인 개선",
+  "content" : "2. Lukas - Y20 조직개편에 따른 실적관리 변경개발\n\t- 공공/기업 및 공공직영/공공채널 분리\n\t- 관련 Data 정제\n\n/pms_svn/bizflow/WEB-INF/vm/pms/contract/presale/presalePipeLineRegistForm.vm\n/pms_svn/src/com/hs/pms/common/sanc/sanc-sql.xml\n/pms_svn/src/com/hs/pms/contract/presale/presale-sql.xml\n\n",
+  "creator" : "남종관",
+  "owner" : "남종관",
+  "worker" : "남종관",
+  "coworker" : "",
+  "delegator" : "",
+  "status" : "R",
+  "created" : 1580860800000,
+  "modified" : 1581643274660,
+  "startd" : 1580860800000,
+  "deadline" : 1582848000000,
+  "completed" : null,
+  "windowMinimized" : false,
+  "position" : {
+    "left" : 592,
+    "top" : 190
+  },
+  "size" : {
+    "width" : "766",
+    "height" : "433"
+  },
+  "color" : "WHITE"
+}, {
+  "id" : 1581643392320,
+  "category" : "Humanest",
+  "title" : "근태연동",
+  "content" : "- 출/퇴근 관리시스템과의 Humanest간 연게\n- 개인별 출/퇴근 조회화면\n- 관리자(팀장급) 이상 조회/통계화면\n",
+  "creator" : "남종관",
+  "owner" : "남종관",
+  "worker" : "남종관",
+  "coworker" : "",
+  "delegator" : "",
+  "status" : "I",
+  "created" : 1581638400000,
+  "modified" : 1581643392320,
+  "startd" : 1581897600000,
+  "deadline" : null,
+  "completed" : null,
+  "windowMinimized" : false,
+  "position" : {
+    "left" : 701,
+    "top" : 403
+  },
+  "size" : {
+    "width" : "36rem",
+    "height" : "26rem"
+  },
+  "color" : "WHITE"
+}, {
+  "id" : 1581643447999,
+  "category" : "Humanest",
+  "title" : "증명서 신청/발급 기능개선",
+  "content" : "",
+  "creator" : "남종관",
+  "owner" : "남종관",
+  "worker" : "남종관",
+  "coworker" : "",
+  "delegator" : "",
+  "status" : "I",
+  "created" : 1581638400000,
+  "modified" : 1581643447999,
+  "startd" : 1581897600000,
+  "deadline" : null,
+  "completed" : null,
+  "windowMinimized" : false,
+  "position" : {
+    "left" : 128,
+    "top" : 218
+  },
+  "size" : {
+    "width" : "36rem",
+    "height" : "26rem"
+  },
+  "color" : "WHITE"
+}, {
+  "id" : 1581643471942,
+  "category" : "Humanest",
+  "title" : "연차촉진 메일연동",
+  "content" : "개별발송",
+  "creator" : "남종관",
+  "owner" : "남종관",
+  "worker" : "남종관",
+  "coworker" : "",
+  "delegator" : "",
+  "status" : "I",
+  "created" : 1581638400000,
+  "modified" : 1581643471942,
+  "startd" : 1582502400000,
+  "deadline" : null,
+  "completed" : null,
+  "windowMinimized" : false,
+  "position" : {
+    "left" : 159,
+    "top" : 166
+  },
+  "size" : {
+    "width" : "36rem",
+    "height" : "26rem"
+  },
+  "color" : "WHITE"
+}, {
+  "id" : 1581644737132,
+  "category" : "Humanest",
+  "title" : "휴가 취소 연동",
+  "content" : "4가지 휴가 서식 작성 \n관련자 투표로 선정\n\n사용일수 마이너스로 넘기고\n내역 저장시 일부 수정하면 될듯\n",
+  "creator" : "남종관",
+  "owner" : "남종관",
+  "worker" : "남종관",
+  "coworker" : "",
+  "delegator" : "",
+  "status" : "R",
+  "created" : 1581638400000,
+  "modified" : 1581644737132,
+  "startd" : 1581638400000,
+  "deadline" : 1582243200000,
+  "completed" : null,
+  "windowMinimized" : false,
+  "position" : {
+    "left" : 183,
+    "top" : 188
+  },
+  "size" : {
+    "width" : "36rem",
+    "height" : "26rem"
+  },
+  "color" : "WHITE"
+}, {
+  "id" : 1579141640558,
+  "category" : "클라우드",
+  "title" : "클라우드 모듈 백업 확보",
+  "content" : "서대영에게 백업 모듈 받아오기\n전달: 최병욱 -> 박남철",
+  "creator" : "남종관",
+  "owner" : "남종관",
+  "worker" : "남종관",
+  "coworker" : "",
+  "delegator" : "",
+  "status" : "P",
+  "created" : 1576540800000,
+  "modified" : 1581985594545,
+  "startd" : 1576540800000,
+  "deadline" : null,
+  "completed" : null,
+  "windowMinimized" : false,
+  "position" : {
+    "left" : 698,
+    "top" : 4
+  },
+  "size" : {
+    "width" : "30rem",
+    "height" : "26rem"
+  },
+  "color" : "WHITE"
+}, {
+  "id" : 1580689131868,
+  "category" : "기타매출",
+  "title" : "한국디엔에이뱅크 LIMS 수정",
+  "content" : "1. 병원명 및 의사 이름 변경\n2. 결과지 8p 문장 추가 및 위치 변경\n",
+  "creator" : "남종관",
+  "owner" : "남종관",
+  "worker" : "남종관",
+  "coworker" : "",
+  "delegator" : "",
+  "status" : "C",
+  "created" : 1580688000000,
+  "modified" : 1583979732721,
+  "startd" : 1580688000000,
+  "deadline" : 1581033600000,
+  "completed" : 1583979732721,
+  "windowMinimized" : false,
+  "position" : {
+    "left" : 952,
+    "top" : 472
+  },
+  "size" : {
+    "width" : "36rem",
     "height" : "26rem"
   },
   "color" : "WHITE"

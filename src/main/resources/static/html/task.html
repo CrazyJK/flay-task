@@ -78,40 +78,21 @@
 					<th class="col-task-action">Action</th>
 				</tr>
 			</thead>
-			<tbody id="taskList">
+			<tbody id="taskList" class="task-list">
 			</tbody>
-		</table>
-	</div>
-
-	<div class="container-fluid mt-2 py-4">
-		<h5><i class="fa fa-tasks ml-2"></i> Closed tasks</h5>
-		<table class="table table-hover table-sm border-bottom">
 			<thead>
 				<tr>
-					<th class="col-task-no">No</th>
-					<th class="col-task-id">Id</th>
-					<th class="col-task-category">Category</th>
-					<th class="col-task-title">Title</th>
-					<th class="col-task-content" style="max-width: 600px;">Content</th>
-					<th class="col-task-creator">Creator</th>
-					<th class="col-task-owner">Owner</th>
-					<th class="col-task-worker">Worker</th>
-					<th class="col-task-coworker">Coworker</th>
-					<th class="col-task-delegator">Delegator</th>
-					<th class="col-task-status">Status</th>
-					<th class="col-task-created">Created</th>
-					<th class="col-task-startd">Startd</th>
-					<th class="col-task-deadline">Deadline</th>
-					<th class="col-task-completed">Completed</th>
-					<th class="col-task-modified">Modified</th>
-					<th class="col-task-position">Position</th>
-					<th class="col-task-size">Size</th>
-					<th class="col-task-color">Color</th>
-					<th class="col-task-minimized">Minimized</th>
-					<th class="col-task-action">Action</th>
+					<th colspan="21"><i class="fa fa-tasks ml-2"></i> Paused tasks</th>
 				</tr>
 			</thead>
-			<tbody id="taskListCompleted">
+			<tbody id="taskListPaused" class="task-list">
+			</tbody>
+			<thead>
+				<tr>
+					<th colspan="21"><i class="fa fa-tasks ml-2"></i> Completed tasks</th>
+				</tr>
+			</thead>
+			<tbody id="taskListCompleted" class="task-list">
 			</tbody>
 		</table>
 	</div>

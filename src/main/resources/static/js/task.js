@@ -143,7 +143,7 @@ function Task(data) {
 	});
 	self.$task.find(".task-save-btn").on("click", function() {
 		if (self.isContentChange()) {
-			self.saveTask('', getList);
+			self.saveTask(getList);
 		}
 	});
 
@@ -271,13 +271,28 @@ function getList() {
 }
 
 function showList(list) {
-	console.log('list', list.length);
+	console.log('list', list);
+	
+	list.sort(function(a, b) {
+		return a.category.localeCompare(b.category);
+	});
 	
 	$(".task.change").removeClass("change");
 
-	$("#taskList, #taskListCompleted").empty();
+	$(".task-list").empty();
+	
 	list.forEach(function(task, idx) {
-		$("#taskList" + (task.status === 'T' || task.status === 'C' ? "Completed" : "")).append(
+		var statusText = "";
+		switch (task.status) {
+		case 'T':
+		case 'C':
+			statusText = 'Completed';
+			break;
+		case 'P':
+			statusText = 'Paused';
+			break;
+		}
+		$("#taskList" + statusText).append(
 				$("<tr>", {id: "tr_" + task.id}).append(
 						$("<td>", {class: "col-task-no"}).html(idx+1),
 						$("<td>", {class: "col-task-id"}).html(task.id),
@@ -421,7 +436,7 @@ function addEventListener() {
 function formatDate(time) {
 	if (time) {
 		if (typeof time === 'string' && time !== '') {
-			time = new Date(time);
+			time = new Date(time.substring(0, 10));
 		} else {
 			return "";
 		}
