@@ -180,3 +180,7 @@ textarea.input-content {
 	text-overflow: ellipsis;
 	vertical-align: bottom;
 }
+
+thead:not(:first-child) th {
+    padding-top: 1.5rem;
+}

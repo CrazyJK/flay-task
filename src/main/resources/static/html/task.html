@@ -52,7 +52,7 @@
 	</nav>
 
 	<div class="container-fluid mt-5 py-4">
-		<table class="table table-hover table-sm border-bottom">
+		<table class="table table-hover table-sm border-bottom mb-5">
 			<thead>
 				<tr>
 					<th class="col-task-no">No</th>
@@ -78,22 +78,13 @@
 					<th class="col-task-action">Action</th>
 				</tr>
 			</thead>
-			<tbody id="taskList" class="task-list">
-			</tbody>
-			<thead>
-				<tr>
-					<th colspan="21"><i class="fa fa-tasks ml-2"></i> Paused tasks</th>
-				</tr>
-			</thead>
-			<tbody id="taskListPaused" class="task-list">
-			</tbody>
-			<thead>
-				<tr>
-					<th colspan="21"><i class="fa fa-tasks ml-2"></i> Completed tasks</th>
-				</tr>
-			</thead>
-			<tbody id="taskListCompleted" class="task-list">
-			</tbody>
+			<tbody id="taskList" class="task-list"></tbody>
+			<thead><tr><th colspan="21"><i class="fa fa-tasks ml-2"></i> Paused tasks</th></tr></thead>
+			<tbody id="taskListPaused" class="task-list"></tbody>
+			<thead><tr><th colspan="21"><i class="fa fa-tasks ml-2"></i> Terminated tasks</th></tr></thead>
+			<tbody id="taskListTerminated" class="task-list"></tbody>
+			<thead><tr><th colspan="21"><i class="fa fa-tasks ml-2"></i> Completed tasks</th></tr></thead>
+			<tbody id="taskListCompleted" class="task-list"></tbody>
 		</table>
 	</div>
 

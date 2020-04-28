@@ -285,6 +285,8 @@ function showList(list) {
 		var statusText = "";
 		switch (task.status) {
 		case 'T':
+			statusText = 'Terminated';
+			break;
 		case 'C':
 			statusText = 'Completed';
 			break;
