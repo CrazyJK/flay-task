@@ -12,6 +12,7 @@ import lombok.Data;
 @ConfigurationProperties(prefix = "task")
 public class TaskProperties {
 
-	File storagePath;
+	String taskFileName;
 
+	File taskFilePath;
 }

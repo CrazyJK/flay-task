@@ -2,6 +2,8 @@ package jk.kamoru.task.source;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -9,7 +11,6 @@ import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,7 +18,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
-import jk.kamoru.task.config.TaskConfig;
 import jk.kamoru.task.config.TaskProperties;
 import jk.kamoru.task.domain.Task;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +31,7 @@ public class TaskFileSource implements TaskSource {
 	ObjectMapper jsonReader = new ObjectMapper();
 	ObjectWriter jsonWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
 
+	File taskFile;
 	List<Task> list;
 
 	@Override
@@ -63,26 +64,40 @@ public class TaskFileSource implements TaskSource {
 		save();
 	}
 
-	File getInfoFile() {
-		return new File(taskProperties.getStoragePath(), TaskConfig.TASK_FILENAME);
+	private File getTaskFile() throws URISyntaxException, IOException {
+		if (taskProperties.getTaskFilePath() == null) {
+			URL taskResource = Thread.currentThread().getContextClassLoader().getResource(taskProperties.getTaskFileName());
+			if (taskResource == null) {
+				throw new IOException("Task file not found in classpath");
+			}
+			return new File(taskResource.toURI());
+		} else {
+			File taskFile = new File(taskProperties.getTaskFilePath(), taskProperties.getTaskFileName());
+			if (!taskFile.exists()) {
+				throw new IOException("Task file not found -> " + taskFile.getCanonicalPath());
+			}
+			return taskFile;
+		}
 	}
 
 	@PostConstruct
 	void load() {
-		File infoFile = getInfoFile();
 		try {
-			list = jsonReader.readValue(infoFile, new TypeReference<List<Task>>() {});
-			log.info(String.format("%5s %-7s - %s", list.size(), FilenameUtils.getBaseName(infoFile.getName()), getInfoFile()));
-		} catch (IOException e) {
-			throw new IllegalStateException("Fail to load note file " + infoFile, e);
+			// set data file
+			taskFile = getTaskFile();
+			// read data tp json
+			list = jsonReader.readValue(taskFile, new TypeReference<List<Task>>() {});
+			log.info("{} task loaded in {}", list.size(), taskFile.getCanonicalPath());
+		} catch (IOException | URISyntaxException e) {
+			throw new IllegalStateException("Fail to load task data", e);
 		}
 	}
 
 	synchronized void save() {
 		try {
-			jsonWriter.writeValue(getInfoFile(), list);
+			jsonWriter.writeValue(taskFile, list);
 		} catch (IOException e) {
-			throw new IllegalStateException("Fail to save note file " + getInfoFile(), e);
+			throw new IllegalStateException("Fail to save task data", e);
 		}
 	}
 

@@ -1,6 +1,7 @@
 /**
  * 
  */
+var contextPath = "/task";
 
 var restCall = function(url, args, callback, failCallback) {
 	var DEFAULTS = {
@@ -23,7 +24,7 @@ var restCall = function(url, args, callback, failCallback) {
 	}, 300);
 	*/
 
-	$.ajax(url, settings).done(function(data) {
+	$.ajax(contextPath + url, settings).done(function(data) {
 		if (callback)
 			callback(data);
 
